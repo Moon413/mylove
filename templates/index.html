@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atrapa los corazones ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+        
+        body {
+            text-align: center;
+            background-color: pink;
+            overflow: hidden;
+        }
+        .corazon {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            font-size: 30px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .carta {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+            max-width: 80%;
+            max-height: 80%;
+            overflow-y: auto;
+            text-align: left;
+            font-family: 'Cambria', serif;
+            font-style: italic;
+            font-size: 22px;
+        }
+        #contador {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .gif-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>¡Atrapa 10 corazones para ver tu carta! ❤️</h1>
+    <p id="contador">Corazones atrapados: 0</p>
+    <div id="juego"></div>
+    <div class="carta" id="carta">
+        <h2>Para mi Alex</h2>
+        <p>Mi amor, ni con todas las palabras del mundo podría describir el inmenso amor que siento por ti.</p>
+        <p>Quiero agradecerte por todo lo que has hecho por mí, por estar siempre a mi lado, acompañándome en los buenos y malos momentos. Mi más grande deseo es que sigas siendo mi mejor amigo, mi pareja y mi compañero de vida, compartiendo juntos cada momento, cada sueño y cada instante de nuestras vidas.</p>
+        <p>Te convertiste en lo más bonito que he tenido y en mi mayor felicidad. En cada uno de mis pensamientos estás presente, iluminando mis días con tu amor y llenando mi corazón de paz.</p>
+        <p>Te amo con todo mi ser.</p>
+        <p><strong>Siempre tuya, Michelle</strong></p>
+        <div class="gif-container">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTNpODh2dTBmNXE4Z3FyMDl4Z2g1MHY1OWFjanRhbmhzdTQ3ZnI1aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/c76IJLufpNwSULPk77/giphy.gif" alt="Corazones flotando" width="200px">
+        </div>
+    </div>
+    <script>
+        let contador = 0;
+        function actualizarContador() {
+            document.getElementById("contador").textContent = "Corazones atrapados: " + contador;
+        }
+        function crearCorazon() {
+            let corazon = document.createElement("div");
+            corazon.classList.add("corazon");
+            corazon.innerHTML = "❤️";
+            corazon.style.left = Math.random() * (window.innerWidth - 40) + "px";
+            corazon.style.top = "-50px";
+            document.body.appendChild(corazon);
+            
+            let velocidad = Math.random() * 3 + 2;
+            function mover() {
+                let posicionActual = corazon.offsetTop;
+                if (posicionActual >= window.innerHeight) {
+                    corazon.remove();
+                } else {
+                    corazon.style.top = (posicionActual + velocidad) + "px";
+                    requestAnimationFrame(mover);
+                }
+            }
+            mover();
+            
+            corazon.addEventListener("click", () => {
+                contador++;
+                actualizarContador();
+                corazon.remove();
+                if (contador >= 10) {
+                    document.getElementById("carta").style.display = "block";
+                }
+            });
+        }
+        setInterval(crearCorazon, 1000);
+    </script>
+</body>
+</html>
